@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Listado de Categorias</title>
+    <style>
+        table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        }
+        th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 2px solid #367800;
+        }
+        th {
+        background-color: #ff79ac;
+        color: #050329;
+        }
+        tr:hover {
+        background-color: #f88416;
+        }
+        .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Listado de categorias</h1>
+    <a th:href="@{/categorias/nueva}">Crear nueva categoria</a>
+
+    <div th:if="${categorias.isEmpty()}">
+        <p>No hay categorias disponibles en este momento.</p>
+    </div>
+    <table th:unless="${categorias.isEmpty()}">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Acción</th>
+        </tr>
+        </thead>
+        <tbody th:each="categoria : ${categorias}">
+        <tr>
+            <td th:text="${categoria.id}"></td>
+            <td th:text="${categoria.nombre}"></td>
+            <td th:text="${categoria.descripcion}"></td>
+            <td>
+                <a th:href="@{/categorias/{id}(id=${categoria.id})}">Ver detalle</a>
+                <a th:href="@{/categorias/{id}/editar(id=${categoria.id})}">Editar</a>
+                <form th:action="@{/categorias/{id}/eliminar(id=${categoria.id})}" method="post">
+                    <button type="submit">Borrar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div style="margin-top: 20px;">
+        <a th:href="@{/}">Volver a Inicio</a>
+</div>
+</body>
+</html>

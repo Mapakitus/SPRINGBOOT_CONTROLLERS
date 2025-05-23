@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Categoria</title>
+</head>
+<body>
+<h1 th:if="${categoria.id != null}">
+  Modificar categoria <span th:text="${categoria.id}"></span>
+</h1>
+<h1 th:if="${categoria.id == null}">Crear nueva categoria</h1>
+
+<form th:action="@{/categorias}" method="post" th:object="${categoria}">
+
+  <!-- campo oculto para el id de la categoria -->
+  <input type="hidden" th:field="*{id}"/>
+
+  <div>
+    <label for="nombre">Nombre de la categoria:</label>
+    <input type="text" id="nombre" th:field="*{nombre}"
+           placeholder="Ingrese el nombre de la categoria" required/>
+  </div>
+  <br/>
+  <div>
+    <label for="descripcion">Descripción de la categoria:</label>
+    <input type="text" id="descripcion" th:field="*{descripcion}"
+           placeholder="Ingrese la descripción de la categoria" required/>
+  </div>
+  <br/>
+  <!-- botones -->
+  <div>
+    <a th:href="@{/categorias}">Cancelar</a>
+    <button type="submit">
+      <span th:if="${categoria.id != null}">Actualizar</span>
+      <span th:if="${categoria.id == null}">Guardar</span>
+      <!--Operador ternario-->
+      <!-- <span th:text="${producto.id != null ? 'Actualizar' : 'Guardar'}"></span>-->
+    </button>
+  </div>
+</form>
+</body>
+</html>

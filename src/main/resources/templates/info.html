@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Información</title>
+</head>
+<body>
+
+<h1>Información sobre la aplicación</h1>
+
+<p><strong>Creada por:</strong> <span th:text="${desarrollador}">Un Desarrollador</span></p>
+<p><strong>Fecha de creación: </strong><span th:text="${fecha}">Fecha F</span></p>
+<p><strong>Versión: </strong><span th:text="${version}">Versión actual</span></p>
+<div style="margin-top: 20px;">
+    <a th:href="@{/}">Volver a Inicio</a>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Detalle de Categoria</title>
+
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        margin: 0;
+    }
+
+    .detalle-item {
+    margin-bottom: 10px;
+}
+    .categoria-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+    .error {
+    color:red;
+    font-weight: bold;
+}
+  </style>
+</head>
+<body>
+<div class="categoria-container">
+  <h1>Detalle de categoria</h1>
+
+  <div th:if="${error}">
+    <p th:text="${error}"></p>
+  </div>
+  <div th:if="${categoria}">
+    <h2 th:text="${categoria.nombre}"></h2>
+    <div class="detalle-item">
+      <strong>ID:</strong> <span th:text="${categoria.id}"></span>
+    </div>
+    <div class="detalle-item">
+      <strong>NOMBRE:</strong> <span th:text="${categoria.nombre}"></span>
+    </div>
+    <div class="detalle-item">
+      <strong>DESCRIPCIÓN:</strong> <span th:text="${categoria.descripcion}"></span>
+    </div>
+  </div>
+  <div style="margin-top: 20px;">
+    <a th:href="@{/categorias}">Volver al listado de categorias</a>
+  </div>
+</div>
+</body>
+</html>

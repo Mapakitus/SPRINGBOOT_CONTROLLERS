@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Detalle de Producto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .detalle-item {
+        margin-bottom: 10px;
+    }
+        .producto-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+        .error {
+        color:red;
+        font-weight: bold;
+    }
+     .disponible {
+      color:green;
+    }
+    .no-disponible {
+    color:red;
+    }
+    </style>
+
+</head>
+<body>
+
+<div class="producto-container">
+    <h1>Detalle de producto</h1>
+
+    <div th:if="${error}">
+        <p th:text="${error}"></p>
+    </div>
+
+<div th:if="${producto}">
+    <h2 th:text="${producto.nombre}"></h2>
+    <div class="detalle-item">
+        <strong>ID:</strong> <span th:text="${producto.id}"></span>
+    </div>
+    <div class="detalle-item">
+        <strong>Precio:</strong> <span th:text="${#numbers.formatDecimal(producto.precio, 1, 2)} + ' €'"></span>
+    </div>
+    <div class="detalle-item">
+        <strong>Stock:</strong> <span th:text="${producto.stock} + (${producto.stock == 1} ? ' Ud.' : ' Uds.')"></span>
+    </div>
+    <div class="detalle-item">
+        <strong>Disponible:</strong> <span
+            th:text="${producto.disponible ? 'Sí' : 'No'}"
+            th:class="${producto.disponible ? 'disponible' : 'no-disponible'}">></span>
+    </div>
+    <div th:if="${producto.categoria != null}">
+        <strong>Categoría:</strong> <span th:text="${producto.categoria.nombre}"></span>
+    </div>
+</div>
+
+<div style="margin-top: 20px;">
+    <a th:href="@{/productos}">Volver al listado de productos</a>
+</div>
+</body>
+</html>
