@@ -3,18 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Página Index</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+
 </head>
 <body>
-<h1>Página Index</h1>
-<nav>
-    <a th:href="@{/productos}">Productos</a>
-    <br>
-    <a th:href="@{/productos/1}">Ver un producto</a>
-    <br>
-    <a th:href="@{/categorias}">Categorias</a>
-    <br>
-    <a th:href="@{/info}">Información de la aplicación</a>
-</nav>
+<div class="container mt-4 mb-5">
+<h1 class="text-center mb-4">Página Index</h1>
+<nav class="mb-4">
+    <a class="btn btn-primary me-2" th:href="@{/productos}">Ver Productos</a>
 
+    <a class="btn btn-success me-2" th:href="@{/categorias}">Ver Categorias</a>
+
+    <a class="btn btn-danger me-2" th:href="@{/proveedores}">Ver Proveedores</a>
+
+    <a class="btn btn-info me-2" th:href="@{/info}">Información de la aplicación</a>
+
+    <br>
+
+    <a class="link-primary" th:href="@{/productos/1}">Ver un producto</a>
+</nav>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        Esto es una alerta.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div>
+
+    </div>
+</div>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </body>
+
 </html>

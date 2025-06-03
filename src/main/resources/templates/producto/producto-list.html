@@ -4,42 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lista de productos</title>
-    <style>
-        table {
-        width: 100%;
-        margin-top: 20px;
-        border-collapse: collapse;
-        }
-        th, td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 2px solid #367800;
-        }
-        th {
-        background-color: #ff79ac;
-        color: #050329;
-        }
-        tr:hover {
-        background-color: #f88416;
-        }
-        .disponible {
-        color: green;
-        font-weight: bold;
-        }
-        .no-disponible {
-        color: red;
-        }
-        .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+
 </head>
 <body>
 <div class="container">
     <h1>Listado de productos</h1>
     <a th:href="@{/productos/nuevo}">Crear nuevo producto</a>
+
+    <!--BUSCAR POR NOMBRE-->
+    <div>
+        <h3>Buscar por nombre:</h3>
+        <form th:action="@{/productos/buscar}" method="get">
+            <input type="text" name="nombre"
+                   th:value="${param.nombre}"
+                   placeholder="Escriba el nombre del producto"
+            minlength="3">
+            <button type="submit">Buscar</button>
+            <a th:href="@{/productos}">Limpiar búsqueda</a>
+        </form>
+        <!--mostrar que se ha buscado-->
+        <div th:if="${busquedaActual}">
+            <p>Resultados de la búsqueda para:"
+                <strong th:text="${busquedaActual}"></strong>"</p>
+        </div>
+    </div>
+
+    <!--FILTRAR POR CATEGORIA-->
+
+    <div>
+        <h3>Filtrar por categoria:</h3>
+        <span th:each="categoria : ${categorias}">
+            <a th:href="@{/productos/categoria/{categoriaId}(categoriaId=${categoria.id})}"
+               th:text="${categoria.nombre}">
+            </a></span>
+            <br>
+    </div>
 
     <div th:if="${productos.isEmpty()}">
         <p>No hay productos disponibles en este momento.</p>

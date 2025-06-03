@@ -4,39 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Listado de Categorias</title>
-    <style>
-        table {
-        width: 100%;
-        margin-top: 20px;
-        border-collapse: collapse;
-        }
-        th, td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 2px solid #367800;
-        }
-        th {
-        background-color: #ff79ac;
-        color: #050329;
-        }
-        tr:hover {
-        background-color: #f88416;
-        }
-        .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+
 </head>
 <body>
 <div class="container">
     <h1>Listado de categorias</h1>
-    <a th:href="@{/categorias/nueva}">Crear nueva categoria</a>
+    <a th:href="@{/categorias/nueva}">Crear nueva categoría</a>
+
+    <!--BUSCAR POR NOMBRE-->
+    <div>
+        <h3>Buscar por nombre de categoría:</h3>
+        <form th:action="@{/categorias/buscar}" method="get">
+            <input type="text" name="nombre"
+                   th:value="${param.nombre}"
+                   placeholder="Escriba el nombre de la categoría">
+            <button type="submit">Buscar</button>
+            <a th:href="@{/categorias}">Limpiar búsqueda</a>
+        </form>
+        <!--mostrar que se ha buscado-->
+        <div th:if="${busquedaActual}">
+            <p>Resultados de la búsqueda para:
+                "<strong th:text="${busquedaActual}"></strong>"</p>
+        </div>
+    </div>
 
     <div th:if="${categorias.isEmpty()}">
         <p>No hay categorias disponibles en este momento.</p>
     </div>
+
+    <div th:if="${param.error}" style="color: white; background: red;">
+        <strong>ERROR:</strong> No se puede eliminar esta categoría porque tiene productos asociados.
+    </div>
+
     <table th:unless="${categorias.isEmpty()}">
         <thead>
         <tr>
@@ -50,7 +50,10 @@
         <tr>
             <td th:text="${categoria.id}"></td>
             <td th:text="${categoria.nombre}"></td>
-            <td th:text="${categoria.descripcion}"></td>
+            <td th:text="${#strings.isEmpty(categoria.descripcion) ? 'Sin descripción' : categoria.descripcion}"></td>
+<!--
+            <td th:text="${categoria.descripcion != null ? categoria.descripcion : 'Sin descripción'}"></td>
+-->
             <td>
                 <a th:href="@{/categorias/{id}(id=${categoria.id})}">Ver detalle</a>
                 <a th:href="@{/categorias/{id}/editar(id=${categoria.id})}">Editar</a>
@@ -63,6 +66,7 @@
     </table>
     <div style="margin-top: 20px;">
         <a th:href="@{/}">Volver a Inicio</a>
+    </div>
 </div>
 </body>
 </html>

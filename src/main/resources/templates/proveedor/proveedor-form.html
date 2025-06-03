@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Proveedor</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<h1 th:if="${proveedor.id != null}">
+    Modificar proveedor <span th:text="${proveedor.id}"></span>
+</h1>
+<h1 th:if="${proveedor.id == null}">Crear nuevo proveedor</h1>
+
+<form th:action="@{/proveedores}" method="post" th:object="${proveedor}">
+
+    <!-- campo oculto para el id del proveedor -->
+    <input type="hidden" th:field="*{id}"/>
+
+    <div>
+        <label for="nombre">Nombre del proveedor:</label>
+        <input type="text" id="nombre" th:field="*{nombre}"
+               placeholder="Ingrese el nombre del proveedor" required/>
+    </div>
+    <br/>
+
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}"
+               placeholder="Ingrese el mail del proveedor"/>
+    </div>
+    <br/>
+
+    <div>
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" th:field="*{telefono}"
+               placeholder="Ingrese el teléfono del proveedor"/>
+    </div>
+    <br/>
+
+   <div>
+       <input type="checkbox" id="activo" th:field="*{activo}"/>
+       <label for="activo">Proveedor Activo</label>
+   </div>
+
+    <div>
+        <label>Productos asociados:</label>
+        <div th:each="producto : ${productos}">
+           <input type="checkbox"
+                  th:id="'producto_' + ${producto.id}"
+                  th:field="*{productos}"
+                  th:value="${producto.id}">
+              <label th:for="'producto_' + ${producto.id}"
+                     th:text="${producto.nombre}"></label>
+        </div>
+
+
+    <!-- botones -->
+    <div>
+        <a th:href="@{/proveedores}">Cancelar</a>
+        <button type="submit">
+            <span th:if="${proveedor.id != null}">Actualizar</span>
+            <span th:if="${proveedor.id == null}">Guardar</span>
+        </button>
+    </div>
+
+</form>
+</body>
+</html>

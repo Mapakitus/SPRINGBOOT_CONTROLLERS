@@ -4,26 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Detalle de Categoria</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 
-  <style>
-    body {
-        font-family: Arial, sans-serif;
-        padding: 20px;
-        margin: 0;
-    }
-
-    .detalle-item {
-    margin-bottom: 10px;
-}
-    .categoria-container {
-    max-width: 600px;
-    margin: 0 auto;
-}
-    .error {
-    color:red;
-    font-weight: bold;
-}
-  </style>
 </head>
 <body>
 <div class="categoria-container">
@@ -41,7 +23,18 @@
       <strong>NOMBRE:</strong> <span th:text="${categoria.nombre}"></span>
     </div>
     <div class="detalle-item">
-      <strong>DESCRIPCIÓN:</strong> <span th:text="${categoria.descripcion}"></span>
+      <strong>DESCRIPCIÓN:</strong>
+
+      <span th:text="${#strings.isEmpty(categoria.descripcion) ? 'Sin descripción' : categoria.descripcion}"></span>
+
+      <!--Otra forma de hacerlo:-->
+<!--
+      <span th:text="${categoria.descripcion != null ? categoria.descripcion : 'Sin descripción'}"></span>
+-->
+
+        <!--Otra forma de hacerlo también:-->
+      <!--<span th:if="${categoria.descripcion != null}" th:text="${categoria.descripcion}"></span>
+            <span th:unless="${categoria.descripcion != null}">Sin descripción</span>-->
     </div>
   </div>
   <div style="margin-top: 20px;">

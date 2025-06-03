@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Detalle del Producto</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="proveedor-container">
+    <h1>Detalle del Proveedor</h1>
+
+    <div th:if="${error}">
+        <p th:text="${error}"></p>
+    </div>
+    <div th:if="${proveedor}">
+        <h2 th:text="${proveedor.nombre}"></h2>
+        <div class="detalle-item">
+            <strong>ID:</strong> <span th:text="${proveedor.id}"></span>
+        </div>
+        <div class="detalle-item">
+            <strong>NOMBRE:</strong> <span th:text="${proveedor.nombre}"></span>
+        </div>
+        <div class="detalle-item">
+            <strong>EMAIL:</strong>
+
+            <span th:text="${#strings.isEmpty(proveedor.email) ? 'Sin email' : proveedor.email}"></span>
+
+            <!--Otra forma de hacerlo:-->
+            <!--
+                  <span th:text="${categoria.descripcion != null ? categoria.descripcion : 'Sin descripción'}"></span>
+            -->
+
+            <!--Otra forma de hacerlo también:-->
+            <!--<span th:if="${categoria.descripcion != null}" th:text="${categoria.descripcion}"></span>
+                  <span th:unless="${categoria.descripcion != null}">Sin descripción</span>-->
+        </div>
+        <div class="detalle-item">
+            <strong>TELÉFONO:</strong>
+
+            <span th:text="${#strings.isEmpty(proveedor.telefono) ? 'Sin teléfono' : proveedor.telefono}"></span>
+            </div>
+        <div class="detalle-item">
+            <strong>Activo:</strong> <span
+                th:text="${proveedor.activo ? 'Sí' : 'No'}"
+                th:class="${proveedor.activo ? 'Sí' : 'No'}">></span>
+        </div>
+        </div>
+    <div style="margin-top: 20px;">
+        <a th:href="@{/proveedores}">Volver al listado de proveedores</a>
+    </div>
+</div>
+</body>
+</html>

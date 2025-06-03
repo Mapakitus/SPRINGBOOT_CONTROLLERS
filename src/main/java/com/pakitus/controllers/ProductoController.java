@@ -5,10 +5,7 @@ import com.pakitus.repositories.CategoriaRepository;
 import com.pakitus.repositories.ProductoRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,8 +28,10 @@ public class ProductoController {
 // crear una lista con todos los productos
         List<Producto> productos = productoRepository.findAll();
         model.addAttribute("productos", productos);
+        model.addAttribute("categorias", categoriaRepository.findAll());
 
-        return "producto-list";
+
+        return "producto/producto-list";
     }
 
     @GetMapping("/productos/{id}") // http://localhost:8080/productos/1
@@ -45,7 +44,7 @@ public class ProductoController {
             model.addAttribute("error", "404 Producto Not Found");
         }
 
-        return "producto-detail";
+        return "producto/producto-detail";
     }
 
     // mostrar formulario para crear nuevo producto
@@ -54,7 +53,7 @@ public class ProductoController {
         model.addAttribute("producto", new Producto());
         model.addAttribute("categorias", categoriaRepository.findAll());
 
-        return "producto-form";
+        return "producto/producto-form";
     }
 
     // mostrar formulario para editar producto existente
@@ -69,7 +68,7 @@ public class ProductoController {
             model.addAttribute("error", "Producto no encontrado");
         }
 
-        return "producto-form";
+        return "producto/producto-form";
     }
 
     // procesar formulario (crear o actualizar)
@@ -87,4 +86,26 @@ public class ProductoController {
 
         return "redirect:/productos";
     }
+
+    //Filtros
+    //Filtrar productos por categoria
+    @GetMapping("/productos/categoria/{categoriaId}")
+    public String findByCategoria(Model model, @PathVariable Long categoriaId) {
+        List<Producto> productos = productoRepository.findByCategoria_Id(categoriaId);
+        model.addAttribute("productos", productos);
+        model.addAttribute("categorias", categoriaRepository.findAll());
+        return "producto/producto-list"; // nombre del archivo HTML que muestra la lista de productos filtrados
+    }
+
+    // Filtrar productos por nombre
+    @GetMapping("/productos/buscar") // http://localhost:8080/productos/buscar?nombre=manzana
+    public String findByNombre(Model model, @RequestParam("nombre") String nombre) {
+        List<Producto> productos = productoRepository.findByNombreContainsIgnoreCase(nombre);
+        model.addAttribute("productos", productos);
+        model.addAttribute("categorias", categoriaRepository.findAll());
+        model.addAttribute("busquedaActual", nombre); // para mostrar el término de búsqueda en la vista
+
+        return "producto/producto-list"; // nombre del archivo HTML que muestra la lista de productos filtrados por nombre
+    }
+
 }

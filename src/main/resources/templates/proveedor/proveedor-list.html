@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lista de proveedores</title>
+<!--
+  Añadir la siguiente línea para incluir Bootstrap desde WebJars:
+-->
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+
+</head>
+<body>
+<div class="container">
+  <h1>Lista de Proveedores</h1>
+  <a th:href="@{/proveedores/nuevo}">Añadir nuevo proveedor</a>
+
+  <h3>Filtros:</h3>
+  <a th:href="@{/proveedores}">Todos</a>
+  <a th:href="@{/proveedores/activos}">Solo Activos</a>
+  <a th:href="@{/proveedores/inactivos}">Solo Inactivos</a>
+
+  <div th:if="${proveedores.isEmpty()}">
+    <p>No hay proveedores disponibles.</p>
+  </div>
+
+  <div th:if="${error}">
+    <p th:text="${error}"></p>
+  </div>
+
+  <table th:if="${!proveedores.isEmpty()}" style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Teléfono</th>
+      <th>Email</th>
+      <th>Activo</th>
+      <th>Productos</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="proveedor : ${proveedores}">
+      <td th:text="${proveedor.id}"></td>
+      <td th:text="${proveedor.nombre}"></td>
+      <td th:text="${proveedor.email ?: 'Sin email'}"></td>
+      <td th:text="${proveedor.telefono ?: 'Sin teléfono'}"></td>
+      <td th:text="${proveedor.activo ? 'Sí' : 'No'}"></td>
+      <td>
+        <span th:if="${proveedor.productos.isEmpty()}">Sin productos</span>
+        <span th:unless="${proveedor.productos.isEmpty()}"
+              th:text="${proveedor.productos.size()} + ' productos'"></span>
+      </td>
+      <td>
+        <a th:href="@{/proveedores/{id}(id=${proveedor.id})}">Ver Detalle</a>
+        <a th:href="@{/proveedores/{id}/editar(id=${proveedor.id})}">Editar</a>
+        <form th:action="@{/proveedores/{id}/eliminar(id=${proveedor.id})}" method="post">
+          <button type="submit" onclick="return confirm('¿Estás seguro de que quieres eliminar este proveedor?')">Borrar</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 20px;">
+    <a th:href="@{/}">Volver a Inicio</a>
+  </div>
+</div>
+</body>
+</html>

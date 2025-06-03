@@ -20,7 +20,6 @@ public class Producto {
     private Boolean disponible;
 
     // MUCHOS productos pueden pertenecer a UNA categoría
-
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;

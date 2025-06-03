@@ -2,6 +2,9 @@ package com.pakitus.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "categorias")
 public class Categoria {
@@ -15,6 +18,9 @@ public class Categoria {
 
     @Column(length = 400)
     private String descripcion;
+
+    @OneToMany(mappedBy = "categoria")
+    private List<Producto> productos = new ArrayList<>();
 
     // constructor vacío
     public Categoria() {}
