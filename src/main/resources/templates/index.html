@@ -6,30 +6,75 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 
 </head>
-<body>
+<body class="bg-info-subtle">
 <div class="container mt-4 mb-5">
 <h1 class="text-center mb-4">Página Index</h1>
 <nav class="mb-4">
     <a class="btn btn-primary me-2" th:href="@{/productos}">Ver Productos</a>
-
     <a class="btn btn-success me-2" th:href="@{/categorias}">Ver Categorias</a>
-
     <a class="btn btn-danger me-2" th:href="@{/proveedores}">Ver Proveedores</a>
-
     <a class="btn btn-info me-2" th:href="@{/info}">Información de la aplicación</a>
-
     <br>
-
     <a class="link-primary" th:href="@{/productos/1}">Ver un producto</a>
 </nav>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         Esto es una alerta.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <div>
-
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Productos</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Gestiona tu inventario de productos</p>
+                    <span class="badge bg-primary">16 productos</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Categorías</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Organiza por categorías</p>
+                    <span class="badge bg-warning text-dark">17 categorías</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Proveedores</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Administra proveedores</p>
+                    <span class="badge bg-success">4 proveedores</span>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="mb-4">
+        <h5>Acciones rápidas</h5>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-success">Nuevo</button>
+            <button type="button" class="btn btn-warning">Editar</button>
+            <button type="button" class="btn btn-danger">Eliminar</button>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <button type="button" class="btn btn-primary" disabled>
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Cargando...
+        </button>
+    </div>
+
 </div>
+
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </body>
 

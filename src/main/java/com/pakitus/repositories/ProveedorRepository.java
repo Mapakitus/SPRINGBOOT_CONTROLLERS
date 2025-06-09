@@ -12,4 +12,8 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Long> {
 
     //Encontrar proveedores inactivos
     List<Proveedor> findByActivoFalse();
+
+    List<Proveedor> findByProductos_Id(Long id);
+
+
 }

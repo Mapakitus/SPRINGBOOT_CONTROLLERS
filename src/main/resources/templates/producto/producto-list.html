@@ -8,45 +8,52 @@
 
 </head>
 <body>
-<div class="container">
-    <h1>Listado de productos</h1>
-    <a th:href="@{/productos/nuevo}">Crear nuevo producto</a>
+<div class="container mt-4 mb-5">
+    <h1 class="mb-4">Listado de productos</h1>
+    <a th:href="@{/productos/nuevo}" class="btn btn-success mb-3">Crear nuevo producto</a>
 
     <!--BUSCAR POR NOMBRE-->
-    <div>
-        <h3>Buscar por nombre:</h3>
-        <form th:action="@{/productos/buscar}" method="get">
-            <input type="text" name="nombre"
-                   th:value="${param.nombre}"
-                   placeholder="Escriba el nombre del producto"
-            minlength="3">
-            <button type="submit">Buscar</button>
-            <a th:href="@{/productos}">Limpiar búsqueda</a>
-        </form>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h3 class="card-title">Buscar por nombre:</h3>
+            <form th:action="@{/productos/buscar}" method="get" class="d-flex gap-2 mb-3">
+                <input type="text"
+                       name="nombre"
+                       th:value="${busquedaActual}"
+                       placeholder="Escriba el nombre del producto"
+                       minlength="3"
+                       class="form-control">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+                <a th:href="@{/productos}" class="btn btn-secondary">Limpiar</a>
+            </form>
         <!--mostrar que se ha buscado-->
-        <div th:if="${busquedaActual}">
-            <p>Resultados de la búsqueda para:"
+        <div th:if="${busquedaActual}" class="alert alert-info">
+            <p class="mb-0">Resultados de la búsqueda para:"
                 <strong th:text="${busquedaActual}"></strong>"</p>
         </div>
     </div>
-
-    <!--FILTRAR POR CATEGORIA-->
-
-    <div>
-        <h3>Filtrar por categoria:</h3>
-        <span th:each="categoria : ${categorias}">
-            <a th:href="@{/productos/categoria/{categoriaId}(categoriaId=${categoria.id})}"
-               th:text="${categoria.nombre}">
-            </a></span>
-            <br>
+    </div>
+        <!-- FILTRAR POR CATEGORÍA -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="card-title">Filtrar por categoría:</h3>
+                <div class="d-flex flex-wrap gap-2 mb-2">
+<span th:each="categoria : ${categorias}">
+<a th:href="@{/productos/categoria/{categoriaId}(categoriaId=${categoria.id})}"
+   th:text="${categoria.nombre}"
+   class="btn btn-outline-primary btn-sm"></a>
+</span>
+                </div>
+                <a th:href="@{/productos}" class="btn btn-secondary">Limpiar filtros</a>
+            </div>
+        </div>
+    <div th:if="${productos.isEmpty()}" class="alert alert-warning">
+        <p class="mb-0">No hay productos disponibles en este momento.</p>
     </div>
 
-    <div th:if="${productos.isEmpty()}">
-        <p>No hay productos disponibles en este momento.</p>
-    </div>
-
-    <table th:unless="${productos.isEmpty()}">
-        <thead>
+    <div th:unless="${productos.isEmpty()}" class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
         <tr>
             <th>ID</th>
             <th>Nombre</th>
@@ -63,21 +70,32 @@
             <td th:text="${producto.nombre}"></td>
             <td th:text="${#numbers.formatDecimal(producto.precio, 1, 2)} + ' €'"></td>
             <td th:text="${producto.stock} + (${producto.stock == 1} ? ' Ud.' : ' Uds.')"></td>
-            <td th:text="${producto.disponible ? 'Sí' : 'No'}"
-                th:class="${producto.disponible ? 'disponible' : 'no-disponible'}"></td>
+            <td class="text-center">
+                <span th:text="${producto.disponible ? 'Sí' : 'No'}"
+                th:class="${producto.disponible ? 'badge bg-success' : 'badge bg-danger'}">
+            </span>
+            </td>
             <td th:text="${producto.categoria != null ? producto.categoria.nombre : 'Sin categoría'}"></td>
             <td>
-                <a th:href="@{/productos/{id}(id=${producto.id})}">Ver detalle</a>
-                <a th:href="@{/productos/{id}/editar(id=${producto.id})}">Editar</a>
-                <form th:action="@{/productos/{id}/eliminar(id=${producto.id})}" method="post">
-                    <button type="submit">Borrar</button>
-                </form>
+              <div class="d-flex gap-1">
+                  <a th:href="@{/productos/{id}(id=${producto.id})}" class="btn btn-primary btn-sm">Ver detalle</a>
+                  <a th:href="@{/productos/{id}/editar(id=${producto.id})}" class="btn btn-warning btn-sm">Editar</a>
+                  <form th:action="@{/productos/{id}/eliminar(id=${producto.id})}" method="post">
+                      <button type="submit" class="btn btn-danger btn-sm">Borrar</button>
+                  </form>
+              </div>
             </td>
         </tr>
         </tbody>
     </table>
-    <br>
-    <a th:href="@{/}">Volver a Inicio</a>
+    </div>
+    <div class="mt-4">
+        <a th:href="@{/categorias}" class="btn btn-info me-2">Ver categorías</a>
+        <a th:href="@{/proveedores}" class="btn btn-info me-2">Ver proveedores</a>
+        <a th:href="@{/}" class="btn btn-success">Volver a Inicio</a>
+    </div>
 </div>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>
